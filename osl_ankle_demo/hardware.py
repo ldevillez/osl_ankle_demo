@@ -13,15 +13,14 @@ GEAR_RATIO = 9.0 * 83.0 / 18.0
 # Torque constant of the ankle motor, in Nm/A (the library default, 0.1133, is the old knee motor)
 NM_PER_AMP_ANKLE = 0.1450
 
-# USB bus of the ankle actpack on the OSL Raspberry Pi (the knee is on bus 4)
-USB_BUS_ANKLE = "2"
+# Vendor ID of Linux USB root hubs (Linux Foundation), skipped when searching a bus
 USB_ROOT_HUB_VENDOR = "1d6b"
 
 # Joint angle at the homing hard stop, in rad
 HOMING_STOP_ANGLE = np.deg2rad(30.0)
 
 
-def find_ankle_port(bus: str = USB_BUS_ANKLE) -> str | None:
+def find_port_on_bus(bus: str) -> str | None:
     """Return the serial port of the actpack plugged on a USB bus, or None if absent.
 
     Parameters

@@ -1,13 +1,26 @@
-# Impedance settings for the OSL ankle demo.
-# Command-line options -k and -b override stiffness and damping.
+# Settings for the OSL ankle demo.
 
-stiffness: 20.0       # Nm/rad, 0 to 100
-damping: 0.5          # Nm s/rad, 0 to 3
-stiffness_step: 5.0   # Nm/rad, change per +/- key press
+# How to find the ankle actpack. `port` wins when set; otherwise the
+# actpack is searched on `usb_bus`. Command-line --port overrides both.
+actuator:
+  # Stable name of the actpack, from `ls -l /dev/serial/by-id/` (follows the
+  # actpack) or `ls -l /dev/serial/by-path/` (follows the USB port).
+  port: /dev/ttyACM0
+  # USB bus of the ankle, from `udevadm info -q property -n /dev/ttyACM0 | grep BUSNUM`.
+  # CM5 + interface board: 2 (the knee is on 4).
+  usb_bus: 2
 
-# Current-loop gains used inside impedance mode (actpack units), tuned for the ankle
-current_gains:
-  kp: 140
-  ki: 150
-  kd: 0
-  ff: 120
+# Command-line -k, -K and -b override the hold stiffness, oscillate stiffness and damping.
+impedance:
+  stiffness:            # Nm/rad, 0 to 100, one per mode
+    hold: 20.0          # soft: people push the foot around
+    oscillate: 60.0     # stiffer: enough torque to beat friction and actually move
+  damping: 0.5          # Nm s/rad, 0 to 3
+  stiffness_step: 5.0   # Nm/rad, change per +/- key press
+
+  # Current-loop gains used inside impedance mode (actpack units), tuned for the ankle
+  current_gains:
+    kp: 40
+    ki: 400
+    kd: 0
+    ff: 120
