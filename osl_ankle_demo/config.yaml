@@ -1,0 +1,13 @@
+# Impedance settings for the OSL ankle demo.
+# Command-line options -k and -b override stiffness and damping.
+
+stiffness: 20.0       # Nm/rad, 0 to 100
+damping: 0.5          # Nm s/rad, 0 to 3
+stiffness_step: 5.0   # Nm/rad, change per +/- key press
+
+# Current-loop gains used inside impedance mode (actpack units), tuned for the ankle
+current_gains:
+  kp: 140
+  ki: 150
+  kd: 0
+  ff: 120
